@@ -4,7 +4,7 @@
 ### Alejandro Barrera Lozano
 ### Curso: Sistemas distribuidos
 
-Para la ejecucion de la aplicacion
+Para la ejecucion de la aplicacion debe tener el servicio de docker corriendo en su pc y docker-compose instalado
 
 `git clone https://github.com/NonSenseGuy/sd-exam2 `
 
