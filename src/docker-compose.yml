@@ -1,9 +1,9 @@
-version: '3'
+version: '3.8'
 
 services:
 
   app:
-    container_name: events_api
+    container_name: fraudata_api
     build: .
     ports:
       - 8080:8080
@@ -17,10 +17,12 @@ services:
       - db
     links:
       - db
+    mem_limit: 500M
+    cpus: 1
 
   db:
     image: postgres
-    container_name: events_db
+    container_name: database
     ports:
       - '5432:5432'
     environment:
@@ -29,3 +31,5 @@ services:
       POSTGRES_DB: "db"
       TZ: 'UTC'
       PGTZ: 'UTC'
+    mem_limit: 500M
+    cpus: 1

@@ -40,7 +40,7 @@ func (h *handler) Get(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteResponse(w, &models.FraudataResponseWriter{Item: item})
+	WriteResponse(w, &models.FraudataResponseWrapper{Item: item})
 }
 
 func (h *handler) List(w http.ResponseWriter, r *http.Request) {
@@ -125,6 +125,10 @@ func (h *handler) Delete(w http.ResponseWriter, r *http.Request) {
 	WriteResponse(w, &models.FraudataResponseWrapper{})
 }
 
+func Health(w http.ResponseWriter, r *http.Request) {
+	panic("implement me")
+}
+
 func responseWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	response, err := json.Marshal(payload)
 	if err != nil {
@@ -138,7 +142,4 @@ func responseWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	if err != nil {
 		log.Fatal(err)
 	}
-}
-
-func GetPerson(w http.ResponseWriter, r *http.Request) {
 }

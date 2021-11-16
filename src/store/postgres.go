@@ -63,22 +63,22 @@ func (conn *pg) List(ctx context.Context, in *models.ListRequest) ([]*models.Fra
 }
 
 func (conn *pg) Report(ctx context.Context, in *models.ReportRequest) error {
-	if in.FraudataItem == nil {
+	if in.Item == nil {
 		return errors.New("unexpected report input")
 	}
 
-	in.FraudataItem.ID = GenerateUniqueID()
-	in.FraudataItem.CreatedOn = conn.db.NowFunc()
+	in.Item.ID = GenerateUniqueID()
+	in.Item.CreatedOn = conn.db.NowFunc()
 
-	return conn.db.WithContext(ctx).Create(in.FraudataItem).Error
+	return conn.db.WithContext(ctx).Create(in.Item).Error
 }
 
 func (conn *pg) Update(ctx context.Context, in *models.ReportRequest) error {
 	item := &models.FraudataItem{
-		ID:            in.FraudataItem.ID,
-		Name:          in.FraudataItem.Name,
-		IsReported:    in.FraudataItem.IsReported,
-		ReportReasons: in.FraudataItem.ReportReasons,
+		ID:            in.Item.ID,
+		Name:          in.Item.Name,
+		IsReported:    in.Item.IsReported,
+		ReportReasons: in.Item.ReportReasons,
 		UpdatedOn:     conn.db.NowFunc(),
 	}
 
