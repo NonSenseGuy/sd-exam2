@@ -10,4 +10,7 @@ Para la ejecucion de la aplicacion
 
 + Procure tener los puertos 8080, 80 y 5432
 + Genere sus certificados ssl para levantar el reverse-proxy entrando al directorio nginx y ejecutando el script generate_keys.sh y dando le permisos de lectura y escritura al directorio ssl generado
-+ ejecute docker-compose up --build
++ `cd nginx`
++ `mkdir ssl && ./generate_keys.sh`
++ `chmod +rwx ssl/*
++ ejecute `docker-compose up --build`
