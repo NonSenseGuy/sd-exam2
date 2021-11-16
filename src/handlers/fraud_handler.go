@@ -17,6 +17,7 @@ type IFraudataHandler interface {
 	Report(w http.ResponseWriter, r *http.Request)
 	Update(w http.ResponseWriter, r *http.Request)
 	Delete(w http.ResponseWriter, r *http.Request)
+	Health(w http.ResponseWriter, r *http.Request)
 }
 
 type handler struct {
@@ -125,8 +126,15 @@ func (h *handler) Delete(w http.ResponseWriter, r *http.Request) {
 	WriteResponse(w, &models.FraudataResponseWrapper{})
 }
 
-func Health(w http.ResponseWriter, r *http.Request) {
-	panic("implement me")
+func (h *handler) Health(w http.ResponseWriter, r *http.Request) {
+	_, err := h.store.List(r.Context(), &models.ListRequest{Limit: 50})
+	if err != nil {
+		WriteError(w, err)
+		WriteResponse(w, &models.FraudataResponseWrapper{Health: "Degraded"})
+		return
+	}
+
+	WriteResponse(w, &models.FraudataResponseWrapper{Health: "Running"})
 }
 
 func responseWithJSON(w http.ResponseWriter, code int, payload interface{}) {

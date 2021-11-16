@@ -10,15 +10,16 @@ type FraudataItem struct {
 	ID            string    `json:"id"`
 	Name          string    `json:"name"`
 	IsReported    bool      `json:"is_reported"`
-	ReportReasons []string  `json:"report_reasons,omitempty"`
+	ReportReasons string    `json:"report_reasons,omitempty"`
 	CreatedOn     time.Time `json:"created_on,omitempty"`
 	UpdatedOn     time.Time `json:"update_on,omitempty"`
 }
 
 type FraudataResponseWrapper struct {
-	Item  *FraudataItem   `json:"item,omitempty"`
-	Items []*FraudataItem `json:"items,omitempty"`
-	Code  int             `json:"-"`
+	Item   *FraudataItem   `json:"item,omitempty"`
+	Items  []*FraudataItem `json:"items,omitempty"`
+	Code   int             `json:"-"`
+	Health string          `json:"health,omitempty"`
 }
 
 func (rw *FraudataResponseWrapper) JSON() []byte {

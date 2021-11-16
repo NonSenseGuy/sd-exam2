@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+
+  goservice:
+    # container_name: fraudata_api
+    build: "./src"
+    ports:
+      - 8080:8080
+      - 8081:8081
+    restart: on-failure
+    environment:
+      PORT: 8080
+      DB_CONN: "postgres://user:password@db:5432/db?sslmode=disable"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    links:
+      - db
+    mem_limit: 500M
+    cpus: 1
+
+  db:
+    image: postgres
+    # container_name: database
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_DB: "db"
+      TZ: 'UTC'
+      PGTZ: 'UTC'
+    mem_limit: 500M
+    cpus: 1
+
+  nginx:
+    build: "./nginx"
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - "goservice"
+
