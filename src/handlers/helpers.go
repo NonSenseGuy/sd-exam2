@@ -10,13 +10,13 @@ import (
 )
 
 type Response interface {
-	Json() []byte
+	JSON() []byte
 	StatusCode() int
 }
 
 func WriteResponse(w http.ResponseWriter, res Response) {
 	w.WriteHeader(res.StatusCode())
-	_, _ = w.Write(res.Json())
+	_, _ = w.Write(res.JSON())
 }
 
 func WriteError(w http.ResponseWriter, err error) {

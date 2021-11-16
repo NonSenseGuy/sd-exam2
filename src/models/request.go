@@ -11,5 +11,5 @@ type ListRequest struct {
 }
 
 type ReportRequest struct {
-	FraudataItem *FraudataItem `json:"fraudata_item"`
+	Item *FraudataItem `json:"fraudata_item"`
 }

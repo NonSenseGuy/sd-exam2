@@ -2,9 +2,12 @@ package handlers
 
 import (
 	"encoding/json"
+	"io/ioutil"
 	"log"
 	"net/http"
 
+	"github.com/nonsenseguy/sd-exam2/errors"
+	"github.com/nonsenseguy/sd-exam2/models"
 	"github.com/nonsenseguy/sd-exam2/store"
 )
 
@@ -25,23 +28,101 @@ func NewFraudataHandler(store store.IStore) IFraudataHandler {
 }
 
 func (h *handler) Get(w http.ResponseWriter, r *http.Request) {
-	panic("implement me")
+	id := r.URL.Query().Get("id")
+	if id == "" {
+		WriteError(w, errors.ErrValidEventIDIsRequired)
+		return
+	}
+
+	item, err := h.store.Get(r.Context(), &models.IDRequest{ID: id})
+	if err != nil {
+		WriteError(w, err)
+		return
+	}
+
+	WriteResponse(w, &models.FraudataResponseWriter{Item: item})
 }
 
 func (h *handler) List(w http.ResponseWriter, r *http.Request) {
-	panic("implement me")
+	values := r.URL.Query()
+
+	limit, err := IntFromString(w, values.Get("limit"))
+	if err != nil {
+		return
+	}
+
+	list, err := h.store.List(r.Context(), &models.ListRequest{Limit: limit})
+	if err != nil {
+		WriteError(w, err)
+		return
+	}
+
+	WriteResponse(w, &models.FraudataResponseWrapper{Items: list})
 }
 
 func (h *handler) Report(w http.ResponseWriter, r *http.Request) {
-	panic("implement me")
+	data, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		WriteError(w, errors.ErrUnprocessableEntity)
+		return
+	}
+
+	item := &models.FraudataItem{}
+	if err := Unmarshal(w, data, item); err != nil {
+		return
+	}
+
+	err = h.store.Report(r.Context(), &models.ReportRequest{Item: item})
+	if err != nil {
+		WriteError(w, err)
+		return
+	}
+
+	WriteResponse(w, &models.FraudataResponseWrapper{Item: item})
 }
 
 func (h *handler) Update(w http.ResponseWriter, r *http.Request) {
-	panic("implement me")
+	data, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		WriteError(w, errors.ErrUnprocessableEntity)
+	}
+
+	req := &models.ReportRequest{}
+	if err := Unmarshal(w, data, req); err != nil {
+		return
+	}
+
+	if _, err := h.store.Get(r.Context(), &models.IDRequest{ID: req.Item.ID}); err != nil {
+		WriteError(w, err)
+		return
+	}
+
+	if err = h.store.Update(r.Context(), req); err != nil {
+		WriteError(w, err)
+		return
+	}
+
+	WriteResponse(w, &models.FraudataResponseWrapper{})
 }
 
 func (h *handler) Delete(w http.ResponseWriter, r *http.Request) {
-	panic("implement me")
+	id := r.URL.Query().Get("id")
+	if id == "" {
+		WriteError(w, errors.ErrValidEventIDIsRequired)
+		return
+	}
+
+	if _, err := h.store.Get(r.Context(), &models.IDRequest{ID: id}); err != nil {
+		WriteError(w, err)
+		return
+	}
+
+	if err := h.store.Delete(r.Context(), &models.IDRequest{ID: id}); err != nil {
+		WriteError(w, err)
+		return
+	}
+
+	WriteResponse(w, &models.FraudataResponseWrapper{})
 }
 
 func responseWithJSON(w http.ResponseWriter, code int, payload interface{}) {
