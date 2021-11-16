@@ -1,13 +1,25 @@
 package main
 
 import (
-	"net/http"
-
-	"github.com/gorilla/mux"
+	"log"
+	"os"
 )
 
 func main() {
-	router := mux.NewRouter()
+	args := Args{
+		conn: "postgres://postgres:@localhost:5432/posgres?sslmode=disable",
+		port: "8080",
+	}
 
-	http.ListenAndServe(":8081", router)
+	if conn := os.Getenv("DB_CONN"); conn != "" {
+		args.conn = conn
+	}
+
+	if port := os.Getenv("PORT"); port != "" {
+		args.port = ":" + port
+	}
+
+	if err := Run(args); err != nil {
+		log.Println(err)
+	}
 }
