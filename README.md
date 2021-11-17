@@ -102,7 +102,7 @@ Request Body:
 }`
 
 
-## What's missing to deploy to a production environement?
+## What's missing to deploy to a production environment?
 
 + Using a domain to host it
 + Use and ec2 as a server
