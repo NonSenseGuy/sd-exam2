@@ -1,6 +1,5 @@
-# Examen 2
 ### Alejandro Barrera Lozano
-### Curso: Sistemas distribuidos
+### Distributed Systems Course
 
 ## Running the app
 
