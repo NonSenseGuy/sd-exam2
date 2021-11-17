@@ -28,15 +28,25 @@ Para la ejecucion de la aplicacion debe tener el servicio de docker corriendo en
 
 Para el consumo de la api haga las peticiones al localhost/api/v1 a continuacion unos ejemplos,
 
+### Conocer la salud del servicio 
+
 GET /api/v1/health
 
+### Listar todos los casos reportados
+Maximo se pueden listar 200 reportes
 GET /api/v1/fraudata
 
+### Obtener un reporte por su id
 GET /api/v1/fraudata/item?id=x
 
+### Eliminar un reporte por su id
 DELETE /api/v1/fraudata/item?id=x
 
+
+### Agregar un nuevo reporte
 POST /api/v1/fraudata 
+
+Request Body:
 `{
 	"name": "Alejandro Barrera",
 	"is_reported": true,
