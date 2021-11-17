@@ -2,11 +2,27 @@
 ### Alejandro Barrera Lozano
 ### Curso: Sistemas distribuidos
 
-# Descripcion
+## Running the app
 
-Golang API que usa Postgres como base de datos, la api consiste en un inventario de personas reportadas por fraude.
+Beforehand you should have this dependencies installed
 
-El modelo consisten en 
++ docker (also be sure to be running it as a service already)
++ docker-compose 
+
+Now you are ready to clone the repository
+	`git clone https://github.com/NonSenseGuy/sd-exam2 `
+
+Generate your ssl certs, required by the reverse proxy
+	`cd nginx && ./generate_keys.sh`
+
+Build and deploy the API
+	`docker-compose up --build`
+
+## API 
+
+This api servers to make a database of persons reported doing fraud
+
+The model you are going to get and post to the databse is this one
 
 FraudataItem
 + name	string
@@ -15,31 +31,62 @@ FraudataItem
 + created_on	time
 + updated_on	time
 
-Para la ejecucion de la aplicacion debe tener el servicio de docker corriendo en su pc y docker-compose instalado
 
-`git clone https://github.com/NonSenseGuy/sd-exam2 `
+To consume the API you are going to do request to this address ['localhost/api/v1']('localhost/api/v1')
 
-+ Procure tener los puertos 8080, 80 y 5432 abiertos
-+ Genere sus certificados ssl para levantar el reverse-proxy entrando al directorio nginx y ejecutando el script generate_keys.sh y dandole permisos de lectura y escritura al directorio ssl generado
-`cd nginx`
-`mkdir ssl && ./generate_keys.sh`
-`chmod +rwx ssl/*`
-+ ejecute `docker-compose up --build`
+## API Requests
 
-Para el consumo de la api haga las peticiones al localhost/api/v1 a continuacion unos ejemplos,
+### Service Health 
 
-# API Requests
+GET /health
 
-### Conocer la salud del servicio 
-
-GET /api/v1/health
+```json
+{
+  "health": "Running"
+}
+```
 
 ### Listar todos los casos reportados
 Maximo se pueden listar 200 reportes
 GET /api/v1/fraudata
 
+```json
+{
+  "items": [
+    {
+      "id": "1637164514-0595213501-8190657423",
+      "name": "Benito Martinez",
+      "is_reported": true,
+      "report_reasons": "Exceso de facha",
+      "created_on": "2021-11-17T15:55:14.595218Z",
+      "update_on": "0001-01-01T00:00:00Z"
+    },
+    {
+      "id": "1637179892-0682314649-0621784935",
+      "name": "Alejandro Barrera",
+      "is_reported": false,
+      "created_on": "2021-11-17T20:11:32.682329Z",
+      "update_on": "0001-01-01T00:00:00Z"
+    },
+  ]
+}
+```
+
 ### Obtener un reporte por su id
 GET /api/v1/fraudata/item?id=x
+
+```json
+{
+  "item": {
+    "id": "1637164514-0595213501-8190657423",
+    "name": "Benito Martinez",
+    "is_reported": true,
+    "report_reasons": "Exceso de facha",
+    "created_on": "2021-11-17T15:55:14.595218Z",
+    "update_on": "0001-01-01T00:00:00Z"
+  }
+}
+```
 
 ### Eliminar un reporte por su id
 DELETE /api/v1/fraudata/item?id=x
@@ -52,5 +99,13 @@ Request Body:
 `{
 	"name": "Alejandro Barrera",
 	"is_reported": true,
-	"report_reasons": "identity thief"
+	"report_reasons": "Idk u tell me"
 }`
+
+
+## Si necesitas poner este servicio en producción, ¿qué crees que puede faltar? ¿que le falta? ¿Qué le añadirías si tuvieras más tiempo?
+
++ Using a domain to host it
++ Use and ec2 as a server
++ Improve reliability by having replicas with kubernetes or docker swarm
++ Make script to build the app, run functional tests and deploy if the tests passed
