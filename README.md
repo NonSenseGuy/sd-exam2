@@ -1,6 +1,4 @@
-# sd-exam2
-
-##Examen 2
+# Examen 2
 ### Alejandro Barrera Lozano
 ### Curso: Sistemas distribuidos
 
