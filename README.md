@@ -17,9 +17,19 @@ Generate your ssl certs, required by the reverse proxy
 Build and deploy the API
 	`docker-compose up --build`
 
+## Docker Images
+
+[API]('https://hub.docker.com/repository/docker/abarreral/sd-exam-api'), based in a golang:alpine docker image
+[Database]('https://hub.docker.com/repository/docker/abarreral/sd-exam-db'), based in postgres:latest docker image
+[Nginx]('https://hub.docker.com/repository/docker/abarreral/sd-exam-nginx'), based in nginx:latest docker image
+
 ## API 
 
 This api servers to make a database of persons reported doing fraud
+
+### How is it build
+
+The endpoint is build using nginx as a reverse proxy, to a API written in GO that uses Postgres as a Database driver
 
 The model you are going to get and post to the databse is this one
 
