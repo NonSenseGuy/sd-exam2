@@ -2,6 +2,8 @@
 ### Alejandro Barrera Lozano
 ### Curso: Sistemas distribuidos
 
+# Descripcion
+
 Golang API que usa Postgres como base de datos, la api consiste en un inventario de personas reportadas por fraude.
 
 El modelo consisten en 
@@ -25,6 +27,8 @@ Para la ejecucion de la aplicacion debe tener el servicio de docker corriendo en
 + ejecute `docker-compose up --build`
 
 Para el consumo de la api haga las peticiones al localhost/api/v1 a continuacion unos ejemplos,
+
+# API Requests
 
 ### Conocer la salud del servicio 
 
