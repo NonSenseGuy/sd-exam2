@@ -32,6 +32,8 @@ services:
       POSTGRES_DB: "db"
       TZ: 'UTC'
       PGTZ: 'UTC'
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
     mem_limit: 500M
     cpus: 1
 
@@ -42,4 +44,9 @@ services:
       - "443:443"
     depends_on:
       - "goservice"
+
+volumes:
+  postgresdata:
+
+
 

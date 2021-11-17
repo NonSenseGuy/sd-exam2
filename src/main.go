@@ -56,7 +56,7 @@ func RegisterAllRoutes(router *mux.Router, handler handlers.IFraudataHandler) {
 
 	router.HandleFunc("/fraudata/item", handler.Get).Methods(http.MethodGet)
 	router.HandleFunc("/fraudata", handler.Report).Methods(http.MethodPost)
-	router.HandleFunc("/fraudata", handler.Delete).Methods(http.MethodDelete)
+	router.HandleFunc("/fraudata/item", handler.Delete).Methods(http.MethodDelete)
 	router.HandleFunc("/fraudata", handler.List).Methods(http.MethodGet)
 	router.HandleFunc("/health", handler.Health).Methods(http.MethodGet)
 }
