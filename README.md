@@ -19,9 +19,9 @@ Build and deploy the API
 
 ## Docker Images
 
-[API]('https://hub.docker.com/repository/docker/abarreral/sd-exam-api'), based in a golang:alpine docker image
-[Database]('https://hub.docker.com/repository/docker/abarreral/sd-exam-db'), based in postgres:latest docker image
-[Nginx]('https://hub.docker.com/repository/docker/abarreral/sd-exam-nginx'), based in nginx:latest docker image
+[API](https://hub.docker.com/repository/docker/abarreral/sd-exam-api) - based in a golang:alpine docker image
+[Database](https://hub.docker.com/repository/docker/abarreral/sd-exam-db) - based in postgres:latest docker image
+[Nginx](https://hub.docker.com/repository/docker/abarreral/sd-exam-nginx) - based in nginx:latest docker image
 
 ## API 
 
