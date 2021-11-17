@@ -108,11 +108,13 @@ DELETE /api/v1/fraudata/item?id=x
 POST /api/v1/fraudata 
 
 Request Body:
-`{
+```json
+{
 	"name": "Alejandro Barrera",
 	"is_reported": true,
 	"report_reasons": "Idk u tell me"
-}`
+}
+```
 
 
 ## What's missing to deploy to a production environment?
