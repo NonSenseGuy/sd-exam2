@@ -46,8 +46,8 @@ GET /health
 }
 ```
 
-### Listar todos los casos reportados
-Maximo se pueden listar 200 reportes
+### List all reported cases
+
 GET /api/v1/fraudata
 
 ```json
@@ -72,7 +72,7 @@ GET /api/v1/fraudata
 }
 ```
 
-### Obtener un reporte por su id
+### Get a report by id
 GET /api/v1/fraudata/item?id=x
 
 ```json
@@ -88,11 +88,11 @@ GET /api/v1/fraudata/item?id=x
 }
 ```
 
-### Eliminar un reporte por su id
+### Delete a report by id
 DELETE /api/v1/fraudata/item?id=x
 
 
-### Agregar un nuevo reporte
+### Create a report
 POST /api/v1/fraudata 
 
 Request Body:
@@ -103,7 +103,7 @@ Request Body:
 }`
 
 
-## Si necesitas poner este servicio en producción, ¿qué crees que puede faltar? ¿que le falta? ¿Qué le añadirías si tuvieras más tiempo?
+## What's missing to deploy to a production environement?
 
 + Using a domain to host it
 + Use and ec2 as a server
